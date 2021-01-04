@@ -1,0 +1,71 @@
+version: '2.0'
+
+services:
+  medcat-trainer-ui:
+    image: cogstacksystems/medcat-trainer:latest
+    container_name: cogstack-medcat-trainer-ui
+    restart: always
+    environment:
+      - TYPE=NOT_UMLS
+      - DEBUG=False
+      - UPDATE_COO=False
+      - NESTED_ENTITIES=False
+      - CNTX_SPAN=9
+      - CNTX_SPAN_SHORT=3
+      - MIN_CUI_COUNT=30000
+      - MIN_CUI_COUNT_STRICT=-1
+      - MIN_ACC=0.2
+      - MIN_ACC_TH=0.2
+      - MIN_CONCEPT_LENGTH=1
+      - NEG_PROB=0.5
+      - LBL_STYLE=LONG
+      - WEIGHTED_AVG=True
+      - PREFER_ICD10=False
+      - PREFER_FREQUENT=False
+      - SKIP_STOPWORDS=False
+      - MAX_SKIP_TKN=2
+      - LR=0.1
+      - ANNEAL=False
+      - KEEP_PUNCT=:|.
+      - SPACY_MODEL=en_core_sci_md
+      - MKL_NUM_THREAD=1
+      - NUMEXPR_NUM_THREADS=1
+      - OMP_NUM_THREADS=1
+
+    volumes:
+      - medcat-api-media:/home/api/media
+      - medcat-api-static:/home/api/static
+      - medcat-api-db:/home/api/db
+    expose:
+      - "8000"
+    command: /home/run.sh
+    networks:
+      - mednet
+
+  medcat-trainer-nginx:
+    image: cogstacksystems/medcat-trainer-nginx:latest
+    container_name: cogstack-medcat-trainer-nginx
+    restart: always
+    volumes:
+      # - /home/stan3/cogstack/CogStack-NiFi/services/medcat-trainer/nginx/sites-enabled/:/etc/nginx/sites-enabled/:ro
+      - /Users/stan3/Data/CogStack-NiFi/services/medcat-trainer/nginx/sites-enabled/:/etc/nginx/sites-enabled/:ro
+      - medcat-api-media:/home/api/media
+      - medcat-api-static:/home/api/static
+    ports:
+      # - "127.0.0.1:8001:8000"
+      - 8001:8000
+    depends_on:
+      - medcat-trainer-ui
+    networks:
+      - mednet
+
+volumes:
+  medcat-api-media:
+    driver: local
+  medcat-api-static:
+    driver: local
+  medcat-api-db:
+    driver: local
+
+networks:
+  mednet:
