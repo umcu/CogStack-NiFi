@@ -13,9 +13,11 @@ services:
     #build: ../nifi/
     container_name: cogstack-nifi
     restart: always
+    env_file:
+      - ../security/nifi.env
     volumes:
       # INFO: mapping custom development directory
-      # - ../nifi/devel:/opt/nifi/devel
+      - ../nifi/devel:/opt/nifi/devel
       - ../nifi/drivers:/opt/nifi/drivers
       # INFO: if there are  local changes, map these content from local host to container
       #       (normally, these 3 directories  below are bundled with our NiFi image)
@@ -35,7 +37,7 @@ services:
       # errors generated during data processing
       # - nifi-vol-errors:/opt/nifi/pipeline/flowfile-errors
     ports:
-      - "8080:8080"
+      - "8443:8443"
     networks:
       - cognet
 
@@ -77,10 +79,10 @@ services:
       - 5000:5000
     networks:
       - cognet
-#
-# #---------------------------------------------------------------------------#
-# # ElasticSearch cluster                                                     #
-# #---------------------------------------------------------------------------#
+
+#---------------------------------------------------------------------------#
+# ElasticSearch cluster                                                     #
+#---------------------------------------------------------------------------#
   elasticsearch-1:
     image: amazon/opendistro-for-elasticsearch:1.6.0
     #image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
@@ -118,11 +120,10 @@ services:
       - 9600
     networks:
       - cognet
-#
-#
-# #---------------------------------------------------------------------------#
-# # Kibana webapp                                                             #
-# #---------------------------------------------------------------------------#
+
+#---------------------------------------------------------------------------#
+# Kibana webapp                                                             #
+#---------------------------------------------------------------------------#
   kibana:
     image: amazon/opendistro-for-elasticsearch-kibana:1.6.0
     #image: docker.elastic.co/kibana/kibana:7.8.0
