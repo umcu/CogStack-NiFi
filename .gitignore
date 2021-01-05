@@ -1,10 +1,13 @@
 .DS_Store
+.idea
+
 # keys and certificates
 *.pem
 *.key
 *.jks
 *.csr
 *.srl
+
 #  env files with passwords or local paths
 security/*.env
 security/internal_users.yml
