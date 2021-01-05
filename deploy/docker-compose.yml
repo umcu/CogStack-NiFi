@@ -44,8 +44,9 @@ services:
 #---------------------------------------------------------------------------#
 # MySQL container with sample data                                       #
 #---------------------------------------------------------------------------#
-  db:
+  mysql:
     image: mysql:8.0.22
+    container_name: cogstack-mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: c0gs74ck!
@@ -63,7 +64,7 @@ services:
 # NLP Services containers                                                   #
 #   * using example free models / resources                                 #
 #---------------------------------------------------------------------------#
-  nlp-medcat:
+  medcat:
     image: cogstacksystems/medcat-service:latest
     container_name: cogstack-medcat
     restart: always

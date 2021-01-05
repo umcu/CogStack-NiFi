@@ -592,7 +592,7 @@
             <properties>
                 <entry>
                     <key>Database Connection URL</key>
-                    <value>jdbc:mysql://deploy_db_1:3306/ntvg</value>
+                    <value>jdbc:mysql://cogstack-mysql:3306/ntvg</value>
                 </entry>
                 <entry>
                     <key>Database Driver Class Name</key>
