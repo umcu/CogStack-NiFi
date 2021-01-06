@@ -14,14 +14,14 @@ services:
     container_name: cogstack-nifi
     restart: always
     env_file:
-      - ../security/nifi.env
+      - /home/stan3/cogstack/security/nifi.env
     volumes:
       # INFO: mapping custom development directory
-      - ../nifi/devel:/opt/nifi/devel
-      - ../nifi/drivers:/opt/nifi/drivers
+      - /home/stan3/cogstack/devel:/opt/nifi/devel
+      - /home/stan3/cogstack/drivers:/opt/nifi/drivers
       # INFO: if there are  local changes, map these content from local host to container
       #       (normally, these 3 directories  below are bundled with our NiFi image)
-      - ../nifi/user-templates:/opt/nifi/nifi-current/conf/templates:ro
+      - /home/stan3/cogstack/drivers/user-templates:/opt/nifi/nifi-current/conf/templates:ro
       #- ../nifi/user-scripts:/opt/nifi/user-scripts:ro
       #- ../nifi/user-schemas:/opt/nifi/user-schemas:ro
       # INFO: uncomment below to map security certificates if need to secure NiFi endpoints
