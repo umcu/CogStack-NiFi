@@ -53,9 +53,7 @@ services:
       MYSQL_ROOT_PASSWORD: c0gs74ck!
       MYSQL_DATABASE: ntvg
     volumes:
-      - /Users/stan3/Data/cogstack/ntvg_articles.sql:/docker-entrypoint-initdb.d/file1.sql
-      # Persist data
-      # - /Users/stan3/Data/cogstack/samples_db_mysql:/var/lib/mysql
+      - /home/stan3/cogstack/ntvg_articles.sql:/docker-entrypoint-initdb.d/file1.sql
     ports:
       - 3306:3306
     networks:
@@ -70,13 +68,13 @@ services:
     container_name: cogstack-medcat
     restart: always
     env_file:
-      - ../services/nlp-services/applications/medcat/config/env_app_dutch
-      - ../services/nlp-services/applications/medcat/config/env_medcat_dutch
+      - /home/stan3/cogstack/medcat/config/env_app_dutch
+      - /home/stan3/cogstack/medcat/config/env_medcat_dutch
     environment:
       - APP_MODEL_NAME=medcat
     volumes:
-      - ../services/nlp-services/applications/medcat/models/dutch/cdb.dat:/cat/models/cdb.dat:ro
-      - ../services/nlp-services/applications/medcat/models/dutch/vocab.dat:/cat/models/vocab.dat:ro
+      - /home/stan3/cogstack/medcat/models/dutch/cdb.dat:/cat/models/cdb.dat:ro
+      - /home/stan3/cogstack/medcat/models/dutch/vocab.dat:/cat/models/vocab.dat:ro
     ports:
       - 5000:5000
     networks:

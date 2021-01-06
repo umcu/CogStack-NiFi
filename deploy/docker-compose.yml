@@ -54,8 +54,6 @@ services:
       MYSQL_DATABASE: ntvg
     volumes:
       - /Users/stan3/Data/cogstack/ntvg_articles.sql:/docker-entrypoint-initdb.d/file1.sql
-      # Persist data
-      # - /Users/stan3/Data/cogstack/samples_db_mysql:/var/lib/mysql
     ports:
       - 3306:3306
     networks:
